@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        messageLabel.text = ""
         
     }
 
@@ -24,6 +25,7 @@ class ViewController: UIViewController {
     @IBAction func messageButtonPressed(_ sender: UIButton) {
         
         messageLabel.text = "You Are Awesome!"
+        messageLabel.textAlignment = .center
         imageView.image = UIImage(named: "image0")
     }
 }
