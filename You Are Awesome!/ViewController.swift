@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVFoundation
+
 
 class ViewController: UIViewController {
     
@@ -20,6 +22,9 @@ class ViewController: UIViewController {
     var messageNumber = -1
     
     let totalImageNumber = 9
+    
+    var audioPlayer: AVAudioPlayer!
+    
     
     // for while loops
 //    var imageNumber = 0
@@ -112,6 +117,19 @@ class ViewController: UIViewController {
 //        } else {
 //            messageLabel.text = awesomeMessage
 //            imageView.image = UIImage(named: "image0")
+        
+        
+        //chap 2.14 play sounds
+        if let sound = NSDataAsset(name: "sound0"){
+            do {
+                try audioPlayer = AVAudioPlayer(data: sound.data)
+                audioPlayer.play()
+            } catch {
+                print("😡 ERROR: \(error.localizedDescription) Could not initialize AVAudioPlayer object. ")
+            }
+        } else {
+             print("😡 ERROR:  Could not read data from file sound0")
+        }
 
     }
 
