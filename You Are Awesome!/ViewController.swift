@@ -16,6 +16,10 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
  
+    
+    @IBOutlet weak var playSoundSwitch: UISwitch!
+    
+    
     // for repeat while loops, beginnning value should -1
     var imageNumber = -1
     
@@ -65,6 +69,15 @@ class ViewController: UIViewController {
         return newNumber
     }
 
+    
+    @IBAction func playSoundTriggerd(_ sender: UISwitch) {
+        if !sender.isOn && audioPlayer != nil {  // if sender.isOn is NOT True
+            audioPlayer.stop() //stop playing
+        }
+            
+    }
+        
+    
     @IBAction func messageButtonPressed(_ sender: UIButton) {
         
         let messages = ["You Are Awesome!",
@@ -82,9 +95,12 @@ class ViewController: UIViewController {
         imageView.image = UIImage(named: "image\(imageNumber)")
         
         soundNumber = nonRepeatingRandom(originalNumber: soundNumber, upperLimit: totalNumberOfSound)
-        playSound(name:"sound\(soundNumber)")
-        
-        
+        if playSoundSwitch.isOn { // if playSoundSwitch is on
+            playSound(name:"sound\(soundNumber)")  // then play the sound
+        }
+
+    
+    
         // while loop for random items with repeat function
 //        var newMessageNumber: Int
 //        repeat {
@@ -172,5 +188,4 @@ class ViewController: UIViewController {
         
 
     }
-
-    }
+}
