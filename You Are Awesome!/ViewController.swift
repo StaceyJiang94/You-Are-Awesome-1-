@@ -21,7 +21,11 @@ class ViewController: UIViewController {
     
     var messageNumber = -1
     
+    var soundNumber = -1
+    
     let totalImageNumber = 9
+    
+    let totalNumberOfSound = 6
     
     var audioPlayer: AVAudioPlayer!
     
@@ -37,6 +41,29 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
     }
+    
+    func playSound(name: String) {
+        //chap 2.14 play sounds
+        if let sound = NSDataAsset(name: name){
+            do {
+                try audioPlayer = AVAudioPlayer(data: sound.data)
+                audioPlayer.play()
+            } catch {
+                print("😡 ERROR: \(error.localizedDescription) Could not initialize AVAudioPlayer object. ")
+            }
+        } else {
+             print("😡 ERROR:  Could not read data from file sound0")
+        }
+        
+    }
+    
+    func nonRepeatingRandom(originalNumber:Int, upperLimit: Int) -> Int {
+        var newNumber: Int
+        repeat {
+            newNumber = Int.random(in: 0...upperLimit)
+        } while originalNumber == newNumber
+        return newNumber
+    }
 
     @IBAction func messageButtonPressed(_ sender: UIButton) {
         
@@ -46,21 +73,45 @@ class ViewController: UIViewController {
                         "When the Genius Bar Needs Help, They Call You!",
                         "Fabulous? That's You!",
                         "You've Got the Design Skills of Jony Ive"]
-
-        var newMessageNumber = Int.random(in:0...messages.count-1)
-        while messageNumber == newMessageNumber{
-            newMessageNumber = Int.random(in:0...messages.count-1)
-        }
-        messageNumber = newMessageNumber
+        
+        
+        messageNumber = nonRepeatingRandom(originalNumber: messageNumber, upperLimit: messages.count-1)
         messageLabel.text = messages[messageNumber]
         
-        
-        var newImageNumber = Int.random(in:0...totalImageNumber)
-        while imageNumber == newImageNumber{
-            newImageNumber = Int.random(in:0...totalImageNumber)
-        }
-        imageNumber = newImageNumber
+        imageNumber = nonRepeatingRandom(originalNumber: imageNumber, upperLimit: totalImageNumber)
         imageView.image = UIImage(named: "image\(imageNumber)")
+        
+        soundNumber = nonRepeatingRandom(originalNumber: soundNumber, upperLimit: totalNumberOfSound)
+        playSound(name:"sound\(soundNumber)")
+        
+        
+        // while loop for random items with repeat function
+//        var newMessageNumber: Int
+//        repeat {
+//            newMessageNumber = Int.random(in:0...messages.count-1)
+//        } while messageNumber == newMessageNumber
+//            newMessageNumber = Int.random(in:0...messages.count-1)
+//        messageNumber = newMessageNumber
+//        messageLabel.text = messages[messageNumber]
+//
+//
+//        var newImageNumber: Int
+//        repeat {
+//            newImageNumber = Int.random(in:0...totalImageNumber)
+//        } while imageNumber == newImageNumber
+//            newImageNumber = Int.random(in:0...totalImageNumber)
+//        imageNumber = newImageNumber
+//        imageView.image = UIImage(named: "image\(imageNumber)")
+//
+//
+//        var newSoundNumber: Int
+//        repeat {
+//            newSoundNumber = Int.random(in: 0...totalNumberOfSound-1)
+//        } while soundNumber == newSoundNumber
+//        soundNumber = newSoundNumber
+//        print("*** The New Sound Number is \(soundNumber)")
+//        playSound(name:"sound\(soundNumber)")
+        
         
         
         
@@ -119,17 +170,6 @@ class ViewController: UIViewController {
 //            imageView.image = UIImage(named: "image0")
         
         
-        //chap 2.14 play sounds
-        if let sound = NSDataAsset(name: "sound0"){
-            do {
-                try audioPlayer = AVAudioPlayer(data: sound.data)
-                audioPlayer.play()
-            } catch {
-                print("😡 ERROR: \(error.localizedDescription) Could not initialize AVAudioPlayer object. ")
-            }
-        } else {
-             print("😡 ERROR:  Could not read data from file sound0")
-        }
 
     }
 
